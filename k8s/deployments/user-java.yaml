@@ -28,8 +28,11 @@ spec:
       - name: <container_name>
         image: registryzdv5829.azurecr.io/tripinsights/<container>:1.0
         env:
-          SQL_USER: sqladminzDv5829
-          SQL_PASSWORD: yV7ap3Ht1
-          SQL_SERVER: sqlserverzdv5829.database.windows.net
+          - name: SQL_USER
+            value: sqladminzDv5829
+          - name: SQL_PASSWORD
+            value: Demopass20240127
+          - name: SQL_SERVER
+            value: sqlserverzdv5829.database.windows.net
         ports:
         - containerPort: <container_port>

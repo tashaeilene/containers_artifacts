@@ -28,5 +28,10 @@ spec:
       containers:
       - name: tripviewer
         image: registryzdv5829.azurecr.io/tripinsights/tripviewer:1.0
+        env:
+          - name: USERPROFILE_API_ENDPOINT
+            value: http://userprofile-service
+          - name: TRIPS_API_ENDPOINT
+            value: http://trips-service
         ports:
         - containerPort: 80

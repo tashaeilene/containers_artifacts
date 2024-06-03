@@ -7,7 +7,7 @@ spec:
     app: hackathon
   ports:
     - protocol: TCP
-      port: 8080
+      port: 80
       targetPort: 80
 ---
 apiVersion: apps/v1
@@ -34,5 +34,7 @@ spec:
             value: Demopass20240127
           - name: SQL_SERVER
             value: sqlserverzdv5829.database.windows.net
+          - name: OPENAPI_DOCS_URI
+            value: "http://localhost"
         ports:
         - containerPort: 80

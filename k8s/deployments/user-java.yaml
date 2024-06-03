@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: <deployment_name>
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: hackathon
+  template:
+    metadata:
+      labels:
+        app: hackathon
+    spec:
+      containers:
+      - name: <container_name>
+        image: registryzdv5829.azurecr.io/tripinsights/<container>:1.0
+        env:
+          SQL_USER:
+          SQL_PASSWORD:
+          SQL_SERVER:
+        ports:
+        - containerPort: <container_port>

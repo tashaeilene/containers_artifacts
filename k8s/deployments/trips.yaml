@@ -28,8 +28,8 @@ spec:
       - name: trips
         image: registryzdv5829.azurecr.io/tripinsights/trips:1.0
         env:
-          SQL_USER: sqladminqKl0163
+          SQL_USER: sqladminzDv5829
           SQL_PASSWORD: yV7ap3Ht1
-          SQL_SERVER: sqlserverqkl0163
+          SQL_SERVER: sqlserverzdv5829.database.windows.net
         ports:
-        - containerPort: 
+        - containerPort: 80

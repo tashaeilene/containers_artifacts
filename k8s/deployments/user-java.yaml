@@ -4,7 +4,7 @@ metadata:
   name: userapi-service
 spec:
   selector:
-    app: hackathon
+    app: hackathon-user-java
   ports:
     - protocol: TCP
       port: 80
@@ -18,11 +18,11 @@ spec:
   replicas: 1
   selector:
     matchLabels:
-      app: hackathon
+      app: hackathon-user-java
   template:
     metadata:
       labels:
-        app: hackathon
+        app: hackathon-user-java
     spec:
       containers:
       - name: userapi

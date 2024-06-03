@@ -4,7 +4,7 @@ metadata:
   name: trips-service
 spec:
   selector:
-    app: hackathon
+    app: hackathon-trips
   ports:
     - protocol: TCP
       port: 80
@@ -18,16 +18,18 @@ spec:
   replicas: 1
   selector:
     matchLabels:
-      app: hackathon
+      app: hackathon-trips
   template:
     metadata:
       labels:
-        app: hackathon
+        app: hackathon-trips
     spec:
       containers:
       - name: trips
         image: registryzdv5829.azurecr.io/tripinsights/trips:1.0
         env:
+          - name: DEBUG_LOGGING
+            value: "true"
           - name: SQL_SERVER
             value: sqlserverzdv5829.database.windows.net
           - name: OPENAPI_DOCS_URI

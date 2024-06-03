@@ -4,7 +4,7 @@ metadata:
   name: userprofile-service
 spec:
   selector:
-    app: hackathon
+    app: hackathon-user
   ports:
     - protocol: TCP
       port: 80
@@ -18,11 +18,11 @@ spec:
   replicas: 1
   selector:
     matchLabels:
-      app: hackathon
+      app: hackathon-user
   template:
     metadata:
       labels:
-        app: hackathon
+        app: hackathon-user
     spec:
       containers:
       - name: userprofile

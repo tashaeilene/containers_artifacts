@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: trips-service
+  name: tripviewer-service
 spec:
   selector:
     app: hackathon
@@ -13,7 +13,7 @@ spec:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: <deployment_name>
+  name: tripviewer
 spec:
   replicas: 1
   selector:
@@ -25,7 +25,7 @@ spec:
         app: hackathon
     spec:
       containers:
-      - name: <container_name>
-        image: registryzdv5829.azurecr.io/tripinsights/<container>:1.0
+      - name: tripviewer
+        image: registryzdv5829.azurecr.io/tripinsights/tripviewer:1.0
         ports:
-        - containerPort: <container_port>
+        - containerPort: 80

@@ -28,13 +28,19 @@ spec:
       - name: trips
         image: registryzdv5829.azurecr.io/tripinsights/trips:1.0
         env:
-          - name: SQL_USER
-            value: sqladminzDv5829
-          - name: SQL_PASSWORD
-            value: Demopass20240127
           - name: SQL_SERVER
             value: sqlserverzdv5829.database.windows.net
           - name: OPENAPI_DOCS_URI
             value: "http://localhost"
+          - name: SQL_USER
+            valueFrom:
+              secretKeyRef:
+                name: db-user-pass
+                key: username
+          - name: SQL_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: db-user-pass
+                key: password                
         ports:
         - containerPort: 80

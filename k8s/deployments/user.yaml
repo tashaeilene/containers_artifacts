@@ -29,9 +29,15 @@ spec:
         image: registryzdv5829.azurecr.io/tripinsights/userprofile:1.0
         env:
           - name: SQL_USER
-            value: sqladminzDv5829
+            valueFrom:
+              secretKeyRef:
+                name: db-user-pass
+                key: username
           - name: SQL_PASSWORD
-            value: Demopass20240127
+            valueFrom:
+              secretKeyRef:
+                name: db-user-pass
+                key: password
           - name: SQL_SERVER
             value: sqlserverzdv5829.database.windows.net
         ports:

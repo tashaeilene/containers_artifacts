@@ -23,6 +23,16 @@ spec:
         - containerPort: 8081
           name: http
           protocol: TCP
+        resources:
+          requests:
+            cpu: "300m" # Request 100 millicpu (0.1 CPU)
+            memory: "3.0Gi" # Request 128 Mebibytes
+          limits:
+            cpu: "300m" # Limit to 200 millicpu (0.2 CPU)
+            memory: "3.0Gi" 
+      nodeSelector:
+        "kubernetes.io/os": linux
+ 
 ---
 apiVersion: v1
 kind: Service

@@ -29,18 +29,39 @@ spec:
       containers:
       - name: poi
         image: registryzdv5829.azurecr.io/tripinsights/poi:1.0
-        env:
-          - name: SQL_USER
-            valueFrom:
-              secretKeyRef:
-                name: db-user-pass
-                key: username
-          - name: SQL_PASSWORD
-            valueFrom:
-              secretKeyRef:
-                name: db-user-pass
-                key: password
-          - name: SQL_SERVER
-            value: sqlserverzdv5829.database.windows.net
         ports:
         - containerPort: 80
+        env:
+        - name: CONFIG_FILES_PATH
+          value: /mnt/secrets-store
+        - name: SQL_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: db-secret
+              key: SQL_PASSWORD
+        - name: SQL_USER
+          valueFrom:
+            secretKeyRef:
+              name: db-secret
+              key: SQL_USER
+        - name: SQL_SERVER
+          valueFrom:
+            secretKeyRef:
+              name: db-secret
+              key: SQL_SERVER
+        - name: SQL_DBNAME
+          valueFrom:
+            secretKeyRef:
+              name: db-secret
+              key: SQL_DBNAME                            
+        volumeMounts:
+        - name: secrets-store01-inline
+          mountPath: "/mnt/secrets-store"
+          readOnly: true
+      volumes:
+        - name: secrets-store01-inline
+          csi:
+            driver: secrets-store.csi.k8s.io
+            readOnly: true
+            volumeAttributes:
+              secretProviderClass: "azure-kvname-user-msi"        

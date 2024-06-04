@@ -30,21 +30,38 @@ spec:
       - name: trips
         image: registryzdv5829.azurecr.io/tripinsights/trips:1.0
         env:
-          - name: DEBUG_LOGGING
-            value: "true"
-          - name: SQL_SERVER
-            value: sqlserverzdv5829.database.windows.net
           - name: OPENAPI_DOCS_URI
             value: "http://localhost"
-          - name: SQL_USER
-            valueFrom:
-              secretKeyRef:
-                name: db-user-pass
-                key: username
           - name: SQL_PASSWORD
             valueFrom:
               secretKeyRef:
-                name: db-user-pass
-                key: password                
+                name: db-secret
+                key: SQL_PASSWORD
+          - name: SQL_USER
+            valueFrom:
+              secretKeyRef:
+                name: db-secret
+                key: SQL_USER
+          - name: SQL_SERVER
+            valueFrom:
+              secretKeyRef:
+                name: db-secret
+                key: SQL_SERVER
+          - name: SQL_DBNAME
+            valueFrom:
+              secretKeyRef:
+                name: db-secret
+                key: SQL_DBNAME                           
         ports:
         - containerPort: 80
+        volumeMounts:
+        - name: secrets-store01-inline
+          mountPath: "/mnt/secrets-store"
+          readOnly: true
+      volumes:
+        - name: secrets-store01-inline
+          csi:
+            driver: secrets-store.csi.k8s.io
+            readOnly: true
+            volumeAttributes:
+              secretProviderClass: "azure-kvname-user-msi"        

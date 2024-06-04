@@ -4,7 +4,6 @@ metadata:
   name: tripviewer-service
   namespace: web
 spec:
-  type: LoadBalancer
   selector:
     app: hackathon-tripviewer
   ports:

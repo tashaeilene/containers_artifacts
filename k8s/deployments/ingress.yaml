@@ -1,0 +1,58 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: api-ingress
+  namespace: api
+spec:
+  ingressClassName: webapprouting.kubernetes.azure.com
+  rules:
+  - host: 
+    http:
+      paths:
+      - pathType: Prefix
+        path: "/api/poi"
+        backend:
+          service:
+            name: poi-service
+            port:
+              number: 80
+      - pathType: Prefix
+        path: "/api/trips"
+        backend:
+          service:
+            name: trips-service
+            port:
+              number: 80
+      - pathType: Prefix
+        path: "/api/user-java"
+        backend:
+          service:
+            name: userapi-service
+            port:
+              number: 80
+      - pathType: Prefix
+        path: "/api/user"
+        backend:
+          service:
+            name: userprofile-service
+            port:
+              number: 80
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: tripviewer-ingress
+  namespace: web
+spec:
+  ingressClassName: webapprouting.kubernetes.azure.com
+  rules:
+  - host: 
+    http:
+      paths:
+      - backend:
+          service:
+            name: tripviewer-service
+            port:
+              number: 80
+        path: /
+        pathType: Prefix

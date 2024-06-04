@@ -8,8 +8,8 @@ spec:
     app: hackathon-user-java
   ports:
     - protocol: TCP
-      port: 80
-      targetPort: 80
+      port: 8080
+      targetPort: 8080
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -26,12 +26,27 @@ spec:
       labels:
         app: hackathon-user-java
     spec:
+      nodeSelector:
+        kubernetes.io/os: linux    
       containers:
       - name: userapi
         image: registryzdv5829.azurecr.io/tripinsights/userapi:1.0
+        securityContext:
+          runAsUser: 1000
+          runAsGroup: 3000
+          runAsNonRoot: true
+          readOnlyRootFilesystem: true
+          allowPrivilegeEscalation: false
+          capabilities:
+            drop:
+            - ALL
+          seccompProfile:
+            type: RuntimeDefault        
         ports:
-        - containerPort: 80
-        env:        
+        - containerPort: 8080
+        env:
+        - name: PORT
+          value: "8080"
         - name: SQL_PASSWORD
           value: /secrets/SQL_PASSWORD
         - name: SQL_USER

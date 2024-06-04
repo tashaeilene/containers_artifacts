@@ -8,8 +8,8 @@ spec:
     app: hackathon-poi
   ports:
     - protocol: TCP
-      port: 80
-      targetPort: 80
+      port: 8080
+      targetPort: 8080
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -26,12 +26,27 @@ spec:
       labels:
         app: hackathon-poi
     spec:
+      nodeSelector:
+        kubernetes.io/os: linux    
       containers:
       - name: poi
         image: registryzdv5829.azurecr.io/tripinsights/poi:1.0
+        securityContext:
+          runAsUser: 0
+          runAsGroup: 0    
+          runAsNonRoot: false
+          readOnlyRootFilesystem: true
+          allowPrivilegeEscalation: false
+          capabilities:
+            drop:
+            - ALL
+          seccompProfile:
+            type: RuntimeDefault        
         ports:
-        - containerPort: 80
+        - containerPort: 8080
         env:
+        - name: WEB_PORT
+          value: "8080"
         - name: CONFIG_FILES_PATH
           value: /mnt/secrets-store                           
         volumeMounts:

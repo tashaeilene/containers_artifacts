@@ -31,30 +31,18 @@ spec:
         image: registryzdv5829.azurecr.io/tripinsights/userapi:1.0
         ports:
         - containerPort: 80
-        env:
+        env:        
         - name: SQL_PASSWORD
-          valueFrom:
-            secretKeyRef:
-              name: db-secret
-              key: SQL_PASSWORD
+          value: /secrets/SQL_PASSWORD
         - name: SQL_USER
-          valueFrom:
-            secretKeyRef:
-              name: db-secret
-              key: SQL_USER
+          value: /secrets/SQL_USER
         - name: SQL_SERVER
-          valueFrom:
-            secretKeyRef:
-              name: db-secret
-              key: SQL_SERVER
+          value: /secrets/SQL_SERVER
         - name: SQL_DBNAME
-          valueFrom:
-            secretKeyRef:
-              name: db-secret
-              key: SQL_DBNAME        
+          value: /secrets/SQL_DBNAME        
         volumeMounts:
         - name: secrets-store01-inline
-          mountPath: "/mnt/secrets-store"
+          mountPath: "/secrets"
           readOnly: true
       volumes:
         - name: secrets-store01-inline
